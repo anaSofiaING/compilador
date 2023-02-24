@@ -37,37 +37,52 @@ public class Analizador {
                 try {
                     letraSiguiente = letras[i].codePointAt(j + 1);
                 } catch (Exception e) {
-                    System.out.println("Error en el Analizador Lexico: " + e.getMessage());
+                    //System.out.println("Error en el Analizador Lexico: " + e.getMessage());
                 }
 
                 switch (estado) {
-                    //Cuando es 1 Es una letra minusculua o mayuscula
                     case 1:
                         lexema = lexema + letras[i].charAt(j);
-                        if (comprobarLetra(letraSiguiente)) {
-                            estado = 1;
-                        } else {
-                            //Cuando es un Identificador y contiene un numero
-                            if (comprobarNumero(letraSiguiente)) {
+                            //Cuando es 1 Es una letra minusculua o mayuscula
+                            if (comprobarLetra(letraSiguiente)) {
                                 estado = 1;
                             } else {
-                                tipo = "IDENTIFICADOR";
-                                estado = 10;
-                                estadoA = 1;
+                                //Cuando es un Identificador y contiene un numero
+                                if (comprobarNumero(letraSiguiente)==1) {
+                                    estado = 1;
+                                } else {
+                                    //cuando es booleano
+                                    if(lexema.contentEquals("true")||lexema.contentEquals("false")||lexema.contentEquals("TRUE")||lexema.contentEquals("FALSE")){
+                                         tipo="BOOLEANO";
+                                         estado=10;
+                                    }else{
+                                        tipo = "IDENTIFICADOR";
+                                        estado = 10;
+                                        estadoA = 1;
+                                    }
+                                    
+                                }
                             }
-                        }
+                        
+                        
                         break;
+                        
                     //Cuando es 2 Es un numero
                     case 2:
                         lexema = lexema + letras[i].charAt(j);
-                        if (comprobarNumero(letraSiguiente)) {
+                        if (comprobarNumero(letraSiguiente)==1) {
                             estado = 2;
-                        } else {
-                            if (Integer.parseInt(lexema) >= -2147483647 && Integer.parseInt(lexema) <= 2147483647) {
-                                tipo = "INT";
+                        }else{
+                            if(comprobarNumero(letraSiguiente)==2){
+                                estado = 4; //es flotante
                             }
-                            estado = 10;
-                            estadoA = 2;
+                            else {
+                                if (Integer.parseInt(lexema) >= -2147483647 && Integer.parseInt(lexema) <= 2147483647) {
+                                    tipo = "INT";
+                                }
+                                estado = 10;
+                                estadoA = 2;
+                            }
                         }
                         break;
                     //Cuando es una cadena
@@ -87,6 +102,20 @@ public class Analizador {
                             estado = 0;
                         }
 
+                        break;
+                        
+                    //cuando es decimal/flotante    
+                    case 4:
+                         lexema = lexema + letras[i].charAt(j);
+                        if (comprobarNumero(letraSiguiente)==1) {
+                            estado = 4;
+                        }else{
+                            if (Float.parseFloat(lexema)>= 1.40129846432481707e-45f  && Float.parseFloat(lexema) <= 3.40282346638528860e+38f) {
+                                tipo = "FLOAT";
+                            }
+                                estado = 10;
+                                estadoA = 2;  
+                        }
                         break;
                     //Cuando es 20 es =
                     case 20:
@@ -119,11 +148,14 @@ public class Analizador {
         return false;
     }
 
-    private boolean comprobarNumero(int n) {
+    private int comprobarNumero(int n) {
         if (n >= 48 && n <= 57) {
-            return true;
+            return 1;//numero
         }
-        return false;
+        if(n==46){
+            return 2;//punto
+        }
+        return 0;
     }
 
     public int estado_transcicion(int n) {

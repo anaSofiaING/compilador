@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dimas/OneDrive/Documentos/NetBeansProjects/Compilador/src/IDE.java</file>
-            <file>file:/C:/Users/Dimas/OneDrive/Documentos/NetBeansProjects/Compilador/src/AnalizadorLexico/Analizador.java</file>
-            <file>file:/C:/Users/Dimas/OneDrive/Documentos/NetBeansProjects/Compilador/src/AnalizadorLexico/Token.java</file>
+            <file>file:/C:/Users/asofi/OneDrive/Documentos/GitHub/compilador/src/numeroLinea.java</file>
+            <file>file:/C:/Users/asofi/OneDrive/Documentos/GitHub/compilador/src/IDE.java</file>
+            <file>file:/C:/Users/asofi/OneDrive/Documentos/GitHub/compilador/src/AnalizadorLexico/Analizador.java</file>
+            <file>file:/C:/Users/asofi/OneDrive/Documentos/GitHub/compilador/src/AnalizadorLexico/Token.java</file>
         </group>
     </open-files>
 </project-private>
